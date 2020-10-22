@@ -1,4 +1,5 @@
 # WhAtThEdOt
+A simple npm library for building dot (graphviz) files with javascript
 
 # Examples
 Below are some examples of fun stuff you can do with dot
