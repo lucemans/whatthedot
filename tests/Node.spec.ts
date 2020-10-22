@@ -1,5 +1,5 @@
 import Graph from '../src/Graph';
-import Node from '../src/Node';
+import Node, { NodeShape } from '../src/Node';
 
 describe('Initializers', () => {
     test('Simple Label', () => {
@@ -7,13 +7,36 @@ describe('Initializers', () => {
         const n = new Node("label");
         graph.add(n);
 
-        expect(n.getInitializer()).toBe('0 [label = label]');
+        expect(n.getInitializer()).toEqual('0 [label = label]');
     });
 
-    test('Complex Colors', () => {
-        // TODO:
-        expect(true).toBe(true);
-    })
+    test('Box Shape', () => {
+        const graph = new Graph("1");
+        const n = new Node("label", {shape: NodeShape.box});
+        graph.add(n);
+        expect(n.getInitializer()).toEqual('0 [label = label, shape = box]');
+    });
+
+    test('Custom Width', () => {
+        const graph = new Graph("1");
+        const n = new Node("label", {width: 2});
+        graph.add(n);
+        expect(n.getInitializer()).toEqual('0 [label = label, width = 2]');
+    });
+
+    test('Custom Width < 1', () => {
+        const graph = new Graph("1");
+        const n = new Node("label", {width: 0.5});
+        graph.add(n);
+        expect(n.getInitializer()).toEqual('0 [label = label, width = .5]');
+    });
+
+    test('Custom Width Default Value', () => {
+        const graph = new Graph("1");
+        const n = new Node("label", {width: 0.75});
+        graph.add(n);
+        expect(n.getInitializer()).toEqual('0 [label = label]');
+    });
 });
 
 describe('Node Linking', () => {
@@ -27,6 +50,7 @@ describe('Node Linking', () => {
         a.goesTo(b);
         expect(a.getGoto()).toEqual(['0 -> 1']);
     });
+
     test('Simple Multi-Directional', () => {
         const graph = new Graph('1');
         const a = new Node('a');

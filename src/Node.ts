@@ -1,16 +1,15 @@
 import { GraphStyle, GraphStylePresets } from "./Style";
-import Graph from "./Graph";
-import {cloneDeep} from "lodash";
+import Graph, { GraphType } from "./Graph";
 
 export enum NodeShape {
     elipse="elipse", box="box", circle="circle", record="record", plaintext="plaintext"
 }
 
 export interface NodeProperties {
-    shape: NodeShape;
-    width: number;
-    height: number;
-    label: string;
+    shape?: NodeShape;
+    width?: number;
+    height?: number;
+    label?: string;
 }
 
 let defaultNodeProps: NodeProperties = {
@@ -30,7 +29,11 @@ export default class Node {
 
         this._goto = [];
 
-        this.props = cloneDeep(props);
+        this.props = {};
+        Object.keys(defaultNodeProps).forEach(a => {
+            this.props[a] = props[a] ? props[a] : defaultNodeProps[a];
+        });
+
         this.props.label = label;
     }
 
@@ -43,7 +46,7 @@ export default class Node {
 
     /* SERIALIZATION */
     getGoto(): string[] {
-        const interject = this.getStyle().connection_line;
+        const interject = this.getStyle().connection_line.replace('$connection', this.graph.type == GraphType.DIGRAPH ? '->' : '--');
         return this._goto.map(to => this.id + interject + to.id);
     }
 
@@ -57,10 +60,20 @@ export default class Node {
             props[a] = this.props[a];
         });
 
+        function parseValue(a: string) {
+            if (typeof props[a] == 'number') {
+                return props[a].toString().replace(/0\./g, '.');
+            }
+            if (typeof props[a] == 'string')
+                return props[a].toString().includes(' ') ? '"' + props[a] + '"' : props[a]
+
+            return props[a];
+        }
+
         const propsArray = Object.keys(props)
             .map(a => style.node_prop
                 .replace('$key', a)
-                .replace('$value', props[a].includes(' ') ? '"' + props[a] + '"' : props[a]));
+                .replace('$value', parseValue(a)));
 
         return style.node_initializer.replace('$id', this.id).replace('$props', propsArray.join(style.node_prop_delim));
     }

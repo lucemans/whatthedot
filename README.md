@@ -1,5 +1,9 @@
 # WhAtThEdOt
-A simple npm library for building dot (graphviz) files with javascript
+A simple library for building dot (graphviz) files with javascript and typescript
+
+# Aim
+My primary aim for this project is to build something fun while learning DOT on the way.
+And ofc just have fun with dot
 
 # Examples
 Below are some examples of fun stuff you can do with dot
