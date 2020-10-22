@@ -1,0 +1,4 @@
+digraph figureName {
+    name -> thing;
+    thing -> name;
+}

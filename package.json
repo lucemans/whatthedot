@@ -1,0 +1,7 @@
+{
+  "name": "whatthedot",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Lucemans <luc@lucemans.nl>",
+  "license": "MIT"
+}
