@@ -1,16 +1,1 @@
-digraph figure1 {
-        compass_pt = n;
-        0 [label=A,shape=circle]
-        1 [label=B]
-        0:nw -> 1
-        // {0 1}->{2 3 4}[color=pink]
-        // subgraph {
-        //     rank = same; 0; 2;
-        // }
-        // subgraph {
-        //     rank = same; 1; 3;
-        // }
-        // subgraph {
-        //     rank = same; 1; 4;
-        // }
-}
+digraph figure1{0[label=Luc];1[label=Anna];0->1}

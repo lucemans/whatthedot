@@ -30,7 +30,6 @@ export default class Graph {
             c = c.concat(a);
         });
 
-
         let _content = c.map(a=>this.style.content_pre+a).join(this.style.content_delim) || this.style.graph_empty;
         return this.style.graph_definition.replace('$graph', this.type.toString().toLowerCase()).replace('$id', this.id).replace('$content', _content == this.style.graph_empty ? this.style.graph_empty : this.style.content_wrap.replace('$content', _content));
     }
